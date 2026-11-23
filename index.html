@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mehmet Hocam için bir zaman yolculuğu</title>
+<style>
+:root{--w:#f2f2f2;--g:#8a8a8a;--d:#2a2a2a}
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow:hidden;background:#000}
+body{background:#000;color:var(--w);font-family:"Helvetica Neue","Segoe UI",Inter,system-ui,sans-serif;font-weight:200;-webkit-font-smoothing:antialiased}
+#c{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.rv{opacity:0;filter:blur(14px);transform:translateY(8px);transition:opacity 1.6s ease,filter 1.6s ease,transform 1.6s ease}
+.rv.on{opacity:1;filter:none;transform:none}
+button{font:inherit;color:var(--w);background:transparent;border:1px solid var(--w);padding:1rem 2.2rem;letter-spacing:.2em;cursor:pointer;transition:background .3s,color .3s}
+button:hover,button:focus-visible{background:var(--w);color:#000;outline:none}
+#intro{position:fixed;inset:0;z-index:30;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3rem;text-align:center;padding:2rem;transition:opacity 1.4s}
+#intro.off{opacity:0;pointer-events:none}
+#intro h1{font-weight:100;font-size:clamp(1.7rem,5.5vw,3.6rem);letter-spacing:.04em;line-height:1.25}
+#snd{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;z-index:25;padding:.5rem .9rem;font-size:.75rem;letter-spacing:.12em;border-color:var(--g);color:var(--g);display:none}
+#story{position:fixed;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 6vw;pointer-events:none;text-shadow:0 0 24px #000,0 0 8px #000}
+#s1{font-size:clamp(1.25rem,3.6vw,2.4rem);max-width:min(90vw,860px);line-height:1.45}
+#s2{font-size:clamp(1.8rem,6vw,4rem);margin-top:1.2rem;font-weight:100;letter-spacing:.06em;transition-delay:.9s}
+#era{position:fixed;left:0;right:0;top:16%;z-index:4;text-align:center;font-size:clamp(1.1rem,4vw,2.2rem);font-weight:100;letter-spacing:.3em;padding:0 4vw;pointer-events:none;text-shadow:0 0 20px #000}
+#tea{position:fixed;left:0;right:0;top:60%;z-index:4;display:flex;justify-content:center;pointer-events:none}
+#tea span{font-size:clamp(4rem,14vw,7rem);filter:grayscale(1) contrast(1.2)}
+#tea img{max-height:26vh;max-width:70vw;filter:grayscale(1) contrast(1.15);border:1px solid var(--d)}
+#pg{position:fixed;left:6vw;right:6vw;bottom:max(22px,env(safe-area-inset-bottom));z-index:6;transition:opacity 2s;opacity:0}
+#pg.on{opacity:1}
+#lab{font-size:.78rem;letter-spacing:.18em;color:var(--g);margin-bottom:.7rem;min-height:1em}
+#tr{height:1px;background:var(--d);position:relative}
+#tr::after{content:"";position:absolute;inset:-4px 0;background:linear-gradient(90deg,var(--d) 1px,transparent 1px) 0 0/20% 100%}
+#fl{height:1px;width:0;background:var(--w);position:relative;z-index:1}
+#final{display:none;position:relative;z-index:5}
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.6rem;padding:3rem 6vw;text-align:center}
+.hero h2{font-weight:100;font-size:clamp(1.6rem,5vw,3.2rem);line-height:1.3;letter-spacing:.03em;text-shadow:0 0 20px #000}
+.card{perspective:1100px;width:min(88vw,380px);height:300px;cursor:pointer;outline:none}
+.in{position:relative;width:100%;height:100%;transition:transform .9s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.card.flip .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid var(--g);background:#050505;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;padding:1.6rem;text-align:center}
+.card:focus-visible .face{border-color:var(--w)}
+.front .sym{font-size:4rem;font-weight:100;font-family:Georgia,serif}
+.front p{letter-spacing:.2em;font-size:.95rem}
+.front small,.hint{color:var(--g);font-size:.75rem;letter-spacing:.14em}
+.back{transform:rotateY(180deg);font-size:.98rem;line-height:1.65}
+.back em{font-style:normal;color:var(--g);font-size:.85rem;letter-spacing:.1em}
+.notes{max-width:640px;margin:0 auto;padding:12vh 6vw 10vh}
+.notes h3{font-weight:100;font-size:clamp(1.4rem,4vw,2rem);letter-spacing:.1em;text-align:center;margin-bottom:4rem;color:var(--g)}
+.note{border:1px solid var(--d);background:rgba(0,0,0,.72);padding:1.6rem 1.5rem;margin-bottom:2.2rem;transition:opacity 1.2s,filter 1.2s,transform 1.2s}
+.note p{font-size:clamp(1.05rem,2.6vw,1.3rem);line-height:1.6}
+.note span{display:block;margin-top:1rem;color:var(--g);font-size:.8rem;letter-spacing:.1em}
+footer{text-align:center;color:var(--g);font-size:.75rem;letter-spacing:.16em;padding:0 6vw 14vh}
+@media(prefers-reduced-motion:reduce){.rv,.note{transition-duration:.01s}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div id="intro">
+  <h1>Mehmet Hocam için<br>bir zaman yolculuğu</h1>
+  <button id="go">Yolculuğa Başla</button>
+</div>
+<button id="snd">Ses: Açık</button>
+
+<div id="story"><p id="s1" class="rv"></p><p id="s2" class="rv"></p></div>
+<div id="era" class="rv"></div>
+<div id="tea" class="rv"></div>
+<div id="pg"><div id="lab"></div><div id="tr"><div id="fl"></div></div></div>
+
+<main id="final">
+  <section class="hero">
+    <h2 id="fh" class="rv">Öğretmenler Gününüz Kutlu Olsun,<br>Sayın Mehmet Hocam</h2>
+    <div id="card" class="card rv" tabindex="0" role="button" aria-label="Tebrik kartını çevir">
+      <div class="in">
+        <div class="face front"><div class="sym">∑</div><p id="cf1"></p><small id="cf2"></small></div>
+        <div class="face back"><p id="cb"></p><em id="cby"></em></div>
+      </div>
+    </div>
+    <p class="hint rv" id="hint">Kartı çevirin · Aşağı kaydırın</p>
+  </section>
+  <section class="notes"><h3>Sizin sayenizde</h3><div id="nl"></div></section>
+  <footer>Telif Hakkı © 2026 nowtes · Ahmet Emin Aydın</footer>
+</main>
+
+<script>
+/* ===================== DÜZENLENEBİLİR ALAN ===================== */
+const TEA_IMG = "cay.jpg";   // Örn: "cay.jpg" — boşsa ☕ ikonu görünür (her durumda siyah-beyaz)
+
+const CARD = {
+  front: ["Öğretmenler Günü", "çevirmek için dokunun"],
+  back:  "Bize yalnızca matematiği değil; sabırla düşünmeyi, pes etmemeyi ve doğru soruyu sormayı da öğrettiniz. İyi ki öğretmenimizsiniz, Mehmet Hocam.",
+  by:    "Ahmet Emin Aydın"
+};
+
+// "Sizin sayenizde..." notları: metni ve imzayı buradan değiştirin / ekleyin / silin.
+const NOTES = [
+  { text: "Sizin sayenizde türev ve integral korkulacak şeyler olmaktan çıktı.", from: "Bir öğrenciniz" },
+  { text: "Sizin sayenizde yanlış yapmaktan çekinmeyip tekrar denemeyi öğrendik.", from: "Bir öğrenciniz" },
+  { text: "Sizin sayenizde zor bir soru, çözülmeyi bekleyen güzel bir bulmacaya dönüştü.", from: "Bir öğrenciniz" },
+  { text: "Sizin sayenizde tahtadaki her çizgi bir anlam kazandı.", from: "Bir öğrenciniz" },
+  { text: "Sizin sayenizde 'anlamadım' demek utanılacak bir şey olmaktan çıktı.", from: "Bir öğrenciniz" },
+  { text: "Sizin sayenizde matematiği sevmeyi öğrendik.", from: "Ahmet Emin Aydın" }
+];
+
+// Çağlar ve formüller
+const ERAS = [
+  { n: "MÖ 300 · ÖKLİD", f: ["a² + b² = c²", "∠A + ∠B + ∠C = 180°", "π = C / d", "√2 ∉ ℚ", "△ABC ≅ △DEF", "nokta · doğru · düzlem"] },
+  { n: "1687 · NEWTON", f: ["F = m·a", "dy/dx = lim Δy/Δx", "∫ f(x) dx", "F = G m₁m₂ / r²", "v = ds/dt", "(a+b)ⁿ = Σ C(n,k) aᵏ bⁿ⁻ᵏ"] },
+  { n: "1748 · EULER", f: ["e^{iπ} + 1 = 0", "V − E + F = 2", "Σ 1/n² = π²/6", "e^{ix} = cos x + i sin x", "ζ(s) = Σ n⁻ˢ", "φ(n)"] },
+  { n: "1900'LER · MODERN MATEMATİK", f: ["iħ ∂ψ/∂t = Ĥψ", "G_μν = 8πG T_μν", "H¹(X; ℤ)", "∮ F·dr = ∬ (∇×F)·dS", "det(A − λI) = 0", "P ≟ NP"] },
+  { n: "∞ · GELECEK", f: ["∞", "∀ε ∃δ", "lim n→∞", "ℵ₀ < 2^ℵ₀", "f : ℝⁿ → ℝᵐ", "Ω", "Hocam → ∞"] }
+];
+
+// Hikaye metinleri (a: başlangıç sn, b: bitiş sn)
+const ST = [
+  { a: 0.8,  b: 7,  t: "Biliyoruz, bu formüller bunca zamandır yazılıyor..." },
+  { a: 8.5,  b: 17, t: "Ama siz bizim için matematiği gözümüzde küçültüp anlamamızı çok kolaylaştırdınız." },
+  { a: 18.5, b: 24, t: "Sizi çok seviyoruz." },
+  { a: 31,   b: 39, t: "Çayınızı da unutmadık.", tea: 1 },
+  { a: 40.5, b: 51, t: "Hazırlayan,:", t2: "Ahmet Emin Aydın" }
+];
+const D = 53;                 // yolculuk süresi (sn)
+const SURGE = [24, 30.5];     // hızlanmanın tekrar vurgulandığı aralık
+/* =============================================================== */
+
+const $ = id => document.getElementById(id);
+const cv = $('c'), x = cv.getContext('2d');
+let W, H, cx, cy, F;
+function rs(){const r=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*r;cv.height=H*r;x.setTransform(r,0,0,r,0,0);cx=W/2;cy=H/2;F=Math.max(W,H)*.25}
+addEventListener('resize', rs); rs();
+
+/* ---------- Ses (Web Audio) ---------- */
+const CH = [[110,164.81,220,261.63],[87.31,130.81,174.61,261.63],[130.81,164.81,196,261.63],[98,146.83,196,246.94]];
+let AC, master, bus, filt, padG, pads, windG, arpG, bassG, bpm = 70, lvl = .09, step = 0, nextT = 0, ai = 3, calm = false, muted = false;
+const vol = () => muted ? 0 : .7;
+function startAudio(){
+  AC = new (window.AudioContext || window.webkitAudioContext)();
+  master = AC.createGain(); master.gain.value = 0; master.connect(AC.destination);
+  const L = AC.sampleRate * 3.5 | 0, ir = AC.createBuffer(2, L, AC.sampleRate);
+  for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<L;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/L,2.6)}
+  const rev = AC.createConvolver(); rev.buffer = ir;
+  const rg = AC.createGain(); rg.gain.value = .6; rev.connect(rg); rg.connect(master);
+  bus = AC.createGain(); bus.connect(master); bus.connect(rev);
+  filt = AC.createBiquadFilter(); filt.type = 'lowpass'; filt.frequency.value = 400; filt.Q.value = .8; filt.connect(bus);
+  padG = AC.createGain(); padG.gain.value = .07; padG.connect(filt);
+  pads = [];
+  for(let i=0;i<8;i++){const o=AC.createOscillator();o.type='sawtooth';o.detune.value=i%2?8:-8;o.frequency.value=CH[0][i>>1];o.connect(padG);o.start();pads.push(o)}
+  // uzay rüzgarı
+  const nb = AC.createBuffer(1, AC.sampleRate*2, AC.sampleRate), nd = nb.getChannelData(0);
+  for(let i=0;i<nd.length;i++)nd[i]=Math.random()*2-1;
+  const ns = AC.createBufferSource(); ns.buffer = nb; ns.loop = true;
+  const bp = AC.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=500; bp.Q.value=2.5;
+  const lf = AC.createOscillator(); lf.frequency.value=.06; const lg = AC.createGain(); lg.gain.value=300; lf.connect(lg); lg.connect(bp.frequency); lf.start();
+  windG = AC.createGain(); windG.gain.value=.05; ns.connect(bp); bp.connect(windG); windG.connect(bus); ns.start();
+  // arp + yankı
+  arpG = AC.createGain(); arpG.gain.value=.45; arpG.connect(bus);
+  const dl = AC.createDelay(2); dl.delayTime.value=.42; const fb = AC.createGain(); fb.gain.value=.5;
+  arpG.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(bus);
+  bassG = AC.createGain(); bassG.gain.value=.6; bassG.connect(master);
+  nextT = AC.currentTime + .1; sched();
+  master.gain.setTargetAtTime(vol(), AC.currentTime, 2.5);
+}
+function ps(s,t){
+  const ci = (s>>5)%4, c = CH[ci];
+  if(s%32===0) pads.forEach((o,i)=>o.frequency.setTargetAtTime(CH[ci][i>>1],t,1.2));
+  if(s%4===0){ // bas nabzı
+    const o=AC.createOscillator(),g=AC.createGain();o.type='sine';
+    o.frequency.setValueAtTime(c[0],t);o.frequency.exponentialRampToValueAtTime(c[0]/2,t+.12);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.9,t+.01);g.gain.exponentialRampToValueAtTime(.001,t+.5);
+    o.connect(g);g.connect(bassG);o.start(t);o.stop(t+.55);
+  }
+  if(s%2===0||Math.random()<.35){ // arpej
+    const pool=[...c,...c.map(f=>f*2),...c.map(f=>f*4)].sort((a,b)=>a-b);
+    const mx=Math.min(11,3+Math.floor(lvl*8));
+    ai=Math.max(0,Math.min(mx,ai+Math.floor(Math.random()*5)-2));
+    const o=AC.createOscillator(),g=AC.createGain();o.type='triangle';o.frequency.value=pool[ai];
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.2,t+.005);g.gain.exponentialRampToValueAtTime(.001,t+.6);
+    o.connect(g);g.connect(arpG);o.start(t);o.stop(t+.7);
+  }
+}
+function sched(){
+  if(!AC) return;
+  while(nextT < AC.currentTime + .25){ ps(step,nextT); nextT += 60/bpm/4; step++; }
+  setTimeout(sched,60);
+}
+function sting(){
+  if(!AC) return; const t = AC.currentTime;
+  const o=AC.createOscillator(),g=AC.createGain();o.type='sine';
+  o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(34,t+1);
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.9,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+1.2);
+  o.connect(g);g.connect(bassG);o.start(t);o.stop(t+1.3);
+  const h=AC.createOscillator(),hg=AC.createGain();h.type='sine';
+  h.frequency.setValueAtTime(880,t);h.frequency.exponentialRampToValueAtTime(1760,t+1.2);
+  hg.gain.setValueAtTime(0,t);hg.gain.linearRampToValueAtTime(.07,t+.05);hg.gain.exponentialRampToValueAtTime(.001,t+1.8);
+  h.connect(hg);hg.connect(bus);h.start(t);h.stop(t+1.9);
+}
+const sb = $('snd');
+sb.onclick = () => { muted = !muted; sb.textContent = 'Ses: ' + (muted ? 'Kapalı' : 'Açık'); if(AC) master.gain.setTargetAtTime(vol(), AC.currentTime, .15); };
+
+/* ---------- Yıldızlar & Formüller ---------- */
+const S = Array.from({length:380}, () => ({x:Math.random()*2-1, y:Math.random()*2-1, z:Math.random()}));
+const FM = [];
+let spawnT = 0;
+let fx = null;
+function spawn(era, fin, z0){
+  const list = ERAS[era].f, sc = Math.max(.7, Math.min(1.25, W/1000));
+  const f = {t:list[Math.random()*list.length|0], x:Math.random()*W, y:Math.random()*H, s:(15+Math.random()*24)*sc,
+             g:130+Math.random()*100|0, age:0, life:8+Math.random()*6, vx:(Math.random()-.5)*10, vy:-(4+Math.random()*10), ph:Math.random()*6.28, o:1, d:0};
+  if(!fin){ // uzaktan, hızlanarak gelen formül
+    const sg = () => (Math.random()<.5?-1:1)*(.12+Math.random()*.43);
+    Object.assign(f, {d:1, fx:sg(), fy:sg()*.8, z:z0||1, s:(24+Math.random()*26)*sc});
+  }
+  FM.push(f);
+}
+function draw(dt, spd, fin, era){
+  x.fillStyle = '#000'; x.fillRect(0,0,W,H);
+  x.lineCap = 'round';
+  const len = .004 + spd*.05;
+  for(const s of S){
+    s.z -= spd*dt;
+    if(s.z <= .02){ s.z = 1; s.x = Math.random()*2-1; s.y = Math.random()*2-1 }
+    const pz = s.z + len, a = Math.pow(1-s.z, .8);
+    const x1 = cx + s.x*F/pz, y1 = cy + s.y*F/pz, x2 = cx + s.x*F/s.z, y2 = cy + s.y*F/s.z;
+    if(x2<-50||x2>W+50||y2<-50||y2>H+50) continue;
+    x.strokeStyle = 'rgba(255,255,255,'+a.toFixed(2)+')'; x.lineWidth = .5 + (1-s.z)*1.6;
+    x.beginPath(); x.moveTo(x1,y1); x.lineTo(x2,y2); x.stroke();
+  }
+  spawnT -= dt;
+  if(spawnT <= 0 && FM.length < (fin ? 24 : 30)){ spawn(fin ? Math.random()*5|0 : era, fin); spawnT = fin ? .7 : .35 }
+  x.textAlign = 'center';
+  for(let i=FM.length-1;i>=0;i--){
+    const f = FM[i]; f.age += dt;
+    if(f.out) f.o -= dt*1.3;
+    if(f.o <= 0){ FM.splice(i,1); continue }
+    let a, px, py, sz = f.s;
+    if(f.d){
+      const k = 1 - f.z;
+      f.z -= dt * (.05 + .5*k*k) * (.6 + spd*.6); // uzaktan yavaş başlar, yaklaştıkça hızlanır
+      if(f.z <= .1){ FM.splice(i,1); continue }
+      px = cx + f.fx*F/f.z; py = cy + f.fy*F/f.z;
+      sz = f.s * Math.min(1.6, .22/f.z);
+      a = Math.min(1, k*5) * Math.min(1, f.z/.2) * .75 * f.o;
+    } else {
+      if(f.age >= f.life){ FM.splice(i,1); continue }
+      f.x += (f.vx + Math.sin(f.age*.5+f.ph)*6)*dt; f.y += f.vy*dt;
+      px = f.x; py = f.y; a = .6*Math.sin(Math.PI*f.age/f.life)*f.o;
+    }
+    x.font = 'italic '+sz.toFixed(0)+'px Georgia,"Cambria Math",serif';
+    x.fillStyle = 'rgba('+f.g+','+f.g+','+f.g+','+a.toFixed(2)+')';
+    x.fillText(f.t, px, py);
+  }
+  if(fx){ // çağ atlama efekti: şok halkaları + kısa flaş
+    fx.t += dt; const k = fx.t/1.8;
+    if(k >= 1) fx = null;
+    else {
+      const R = Math.hypot(W,H)*.6;
+      x.strokeStyle = 'rgba(255,255,255,'+((1-k)*.8).toFixed(2)+')'; x.lineWidth = 1+(1-k)*3;
+      x.beginPath(); x.arc(cx,cy,k*R,0,6.283); x.stroke();
+      x.strokeStyle = 'rgba(255,255,255,'+((1-k)*.4).toFixed(2)+')'; x.lineWidth = 1;
+      x.beginPath(); x.arc(cx,cy,k*R*.62,0,6.283); x.stroke();
+      const fl = .22*Math.max(0,1-k*4);
+      if(fl > 0){ x.fillStyle = 'rgba(255,255,255,'+fl.toFixed(3)+')'; x.fillRect(0,0,W,H) }
+    }
+  }
+}
+
+/* ---------- Akış ---------- */
+let T = 0, run = false, done = false, spd = .12, bump = 0, last = performance.now(), cur = null, eraI = -1;
+const s1 = $('s1'), s2 = $('s2'), tea = $('tea'), lab = $('lab'), fl = $('fl');
+if(TEA_IMG){ const im = new Image(); im.src = TEA_IMG; im.alt = 'Çay'; tea.appendChild(im) }
+else tea.innerHTML = '<span>☕</span>';
+
+$('go').onclick = () => {
+  try { startAudio() } catch(e) {}
+  $('intro').classList.add('off'); sb.style.display = 'block'; $('pg').classList.add('on');
+  T = 0; run = true; last = performance.now();
+};
+
+function finish(){
+  done = true; calm = true;
+  $('pg').classList.remove('on');
+  s1.classList.remove('on'); s2.classList.remove('on'); tea.classList.remove('on');
+  document.documentElement.style.overflowY = 'auto';
+  $('final').style.display = 'block';
+  setTimeout(() => $('fh').classList.add('on'), 400);
+  setTimeout(() => $('card').classList.add('on'), 2000);
+  setTimeout(() => $('hint').classList.add('on'), 3200);
+}
+
+function frame(now){
+  const dt = Math.min(.05, (now-last)/1000); last = now;
+  if(run){
+    if(!done){ T += dt; if(T >= D) finish() }
+    const p = Math.min(1, T/D);
+    const [b0, b1] = SURGE;
+    const boost = done ? 0 : T<b0-1.5 ? 0 : T<b0 ? (T-(b0-1.5))/1.5 : T<b1-1.5 ? 1 : T<b1 ? (b1-T)/1.5 : 0;
+    bump = Math.max(0, bump - dt*1.2);
+    const tgt = done ? .02 : .12 + .5*p + 1.6*boost + bump;
+    spd += (tgt-spd) * Math.min(1, dt*(done ? .8 : 2));
+    const e = Math.min(4, Math.floor(p*5));
+    if(!done && e !== eraI){
+      const first = eraI < 0; eraI = e; lab.textContent = ERAS[e].n;
+      FM.forEach(f => { f.out = 1 });                       // eski çağın formülleri solar
+      for(let k=0;k<8;k++) spawn(e, false, .55 + Math.random()*.45); // yeni çağın formülleri gelir
+      const et = $('era'); et.textContent = ERAS[e].n; et.classList.add('on');
+      clearTimeout(et._t); et._t = setTimeout(() => et.classList.remove('on'), 2600);
+      if(!first){ bump = 2.2; fx = {t:0}; sting() }
+    }
+    fl.style.width = (p*100).toFixed(2) + '%';
+    if(!done){
+      const it = ST.find(i => T>=i.a && T<i.b) || null;
+      if(it !== cur){
+        cur = it;
+        if(it){ s1.textContent = it.t; s2.textContent = it.t2 || ''; s1.classList.add('on'); s2.classList.toggle('on', !!it.t2); tea.classList.toggle('on', !!it.tea) }
+        else { s1.classList.remove('on'); s2.classList.remove('on'); tea.classList.remove('on') }
+      }
+    }
+    draw(dt, spd, done, e);
+    if(AC){
+      const g = calm ? 0 : Math.min(1, .09 + .91*(p + .1*boost));
+      lvl += (g-lvl) * Math.min(1, dt*(calm ? .35 : 1.5));
+      bpm = 62 + 88*lvl;
+      const n = AC.currentTime;
+      filt.frequency.setTargetAtTime(350 + lvl*4200, n, .3);
+      arpG.gain.setTargetAtTime(calm ? .22 : .45 + .4*lvl, n, .5);
+      bassG.gain.setTargetAtTime(calm ? .12 : .55 + .35*lvl, n, .5);
+      windG.gain.setTargetAtTime(calm ? .1 : .045 + .05*lvl, n, .8);
+    }
+  }
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* ---------- Kart & Notlar ---------- */
+$('cf1').textContent = CARD.front[0]; $('cf2').textContent = CARD.front[1];
+$('cb').textContent = CARD.back; $('cby').textContent = '— ' + CARD.by;
+const card = $('card');
+const flip = () => card.classList.toggle('flip');
+card.onclick = flip;
+card.onkeydown = e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); flip() } };
+
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target) } }), {threshold:.25});
+NOTES.forEach(n => {
+  const d = document.createElement('div'); d.className = 'note rv';
+  const p = document.createElement('p'); p.textContent = n.text;
+  const s = document.createElement('span'); s.textContent = '— ' + (n.from || 'Bir öğrenciniz');
+  d.append(p, s); $('nl').appendChild(d); io.observe(d);
+});
+</script>
+</body>
+</html>
